@@ -1,20 +1,20 @@
-from flask import Flask, request
+from flask import Flask, make_response, jsonify
 
 app = Flask(__name__)
 
 
 @app.route('/') # strona główna aplikacji
 def index():
-    # print(request.headers)
-    # print(f'Method: {request.method}')
-    # print(f'Path: {request.path}')
-    # print(f'URL: {request.url}')
-    # print(request.headers['Authorization']) # drukujemy wartość nagłówka (klucza) Authorization
-    print(request.headers['Content-Type'])
-    print(request.json)
-    print(request.json['name'])
-    print(request.json.get('age'))
-    return 'Hello, from Flask!!!!!!'
+    # response = make_response({'id':1, 'title':'Title'})
+    # response.headers['Content-Type'] = 'application/json' # jsonify ustawia z automatu na application/json
+
+    # response = jsonify([{'id': 1, 'title': 'Title'}])  # funkcja zamienia obiekt na JSON
+
+    # zmiana statusu odpowiedzi na 404
+    response = jsonify({'error':'Not found!'})
+    response.status_code = 404
+
+    return response # Flask zwraca obiekt Response
 
 if __name__ == '__main__':
     app.run(debug=True) # w momencie zmiany kodu serwer zostanie zrestartowany i jeżeli będzie jakiś błąd to dostaniemy szczegółową informację
